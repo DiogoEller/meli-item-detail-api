@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.diogoeller.meli_item_detail_api.dto.ProductDto;
 import com.diogoeller.meli_item_detail_api.exception.ResourceNotFoundException;
-import com.diogoeller.meli_item_detail_api.service.ProductService;
+import com.diogoeller.meli_item_detail_api.interfaces.ProductServiceInterface;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -22,12 +22,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api/v1/products")
 @RequiredArgsConstructor
 @Slf4j
 public class ProductController {
 
-    private final ProductService productService;
+    private final ProductServiceInterface productService;
 
     @GetMapping
     @Operation(summary = "Lista todos os produtos", description = "Retorna uma lista de todos os produtos cadastrados")

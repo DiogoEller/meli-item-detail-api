@@ -1,6 +1,7 @@
 package com.diogoeller.meli_item_detail_api.repository;
 
 import com.diogoeller.meli_item_detail_api.exception.ProductAlreadyExistsException;
+import com.diogoeller.meli_item_detail_api.interfaces.ProductRepositoryInterface;
 import com.diogoeller.meli_item_detail_api.model.Product;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,7 +16,7 @@ import java.util.List;
 
 @Repository
 @Slf4j
-public class ProductRepository {
+public class ProductRepository implements ProductRepositoryInterface {
 
     @Value("${products.file.path:src/main/resources/data/products.json}")
     private String filePath;
@@ -36,6 +37,7 @@ public class ProductRepository {
         return file;
     }
 
+    @Override
     public List<Product> findAll() {
         log.info("Lendo todos os produtos do arquivo JSON.");
         try {
@@ -48,6 +50,7 @@ public class ProductRepository {
         }
     }
 
+    @Override
     public Product findById(String id) {
         log.info("Buscando produto por id: {}", id);
         Product product = findAll().stream()
@@ -62,6 +65,7 @@ public class ProductRepository {
         return product;
     }
 
+    @Override
     public Product save(Product product) {
         log.info("Salvando novo produto: {}", product.getTitle());
         List<Product> products = findAll();
@@ -76,6 +80,7 @@ public class ProductRepository {
         return product;
     }
 
+    @Override
     public Product update(String id, Product updatedProduct) {
         log.info("Atualizando produto com id: {}", id);
         List<Product> products = findAll();
@@ -92,6 +97,7 @@ public class ProductRepository {
         return null;
     }
 
+    @Override
     public void delete(String id) {
         log.info("Removendo produto com id: {}", id);
         List<Product> products = findAll();
@@ -104,6 +110,7 @@ public class ProductRepository {
         }
     }
 
+    @Override
     public void saveAll(List<Product> products) {
         log.info("Persistindo lista de produtos no arquivo JSON.");
         try {
