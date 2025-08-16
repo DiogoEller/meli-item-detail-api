@@ -1,7 +1,6 @@
 package com.diogoeller.meli_item_detail_api.mapper;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.diogoeller.meli_item_detail_api.dto.ProductDto;
 import com.diogoeller.meli_item_detail_api.model.Product;
@@ -39,10 +38,10 @@ public class ProductMapper {
     }
 
     public static List<ProductDto> toDtoList(List<Product> products) {
-        return products.stream().map(ProductMapper::toDto).collect(Collectors.toList());
+        return products.stream().map(ProductMapper::toDto).toList();
     }
 
     public static List<Product> toEntityList(List<ProductDto> dtos) {
-        return dtos.stream().map(ProductMapper::toEntity).collect(Collectors.toList());
+        return dtos.stream().map(ProductMapper::toEntity).toList();
     }
 }
