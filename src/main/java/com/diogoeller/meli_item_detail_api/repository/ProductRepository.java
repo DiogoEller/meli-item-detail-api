@@ -120,4 +120,11 @@ public class ProductRepository implements ProductRepositoryInterface {
             log.error("Erro ao salvar produtos no arquivo: {}", e.getMessage());
         }
     }
+
+    @Override
+    public List<Product> findByCategory(String category) {
+        return findAll().stream()
+            .filter(p -> p.getCategory().equalsIgnoreCase(category))
+            .toList();
+    }
 }

@@ -10,4 +10,5 @@ public interface ProductServiceInterface {
     ProductDto createProduct(ProductDto productDto);
     ProductDto updateProduct(String id, ProductDto productDto);
     void deleteProduct(String id);
+    List<ProductDto> getRelatedItems(String category);
 }

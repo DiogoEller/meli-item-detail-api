@@ -68,4 +68,13 @@ public class ProductService implements ProductServiceInterface {
         productRepository.delete(id);
         log.debug("Produto com id '{}' removido do repositório.", id);
     }
+
+    @Override
+    public List<ProductDto> getRelatedItems(String category) {
+        log.info("Buscando produtos relacionados pela categoria: {}", category);
+        List<Product> products = productRepository.findByCategory(category);
+        List<ProductDto> related = ProductMapper.toDtoList(products);
+        log.debug("Produtos relacionados encontrados: {}", related.size());
+        return related;
+    }
 }

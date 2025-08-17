@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.diogoeller.meli_item_detail_api.dto.ProductDto;
@@ -88,5 +89,14 @@ public class ProductController {
         }
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/related")
+    @Operation(summary = "Lista produtos relacionados por categoria", description = "Retorna produtos da categoria informada")
+    public ResponseEntity<List<ProductDto>> getRelatedItems(
+            @Parameter(description = "Categoria do produto", example = "Eletrônicos") @RequestParam String category) {
+        log.info("Buscando produtos relacionados pela categoria: {}", category);
+        List<ProductDto> related = productService.getRelatedItems(category);
+        return ResponseEntity.ok(related);
     }
 }
