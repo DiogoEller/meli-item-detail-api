@@ -11,4 +11,5 @@ public interface ProductRepositoryInterface {
     Product update(String id, Product updatedProduct);
     void delete(String id);
     void saveAll(List<Product> products);
+    List<Product> findByCategory(String category);
 }
