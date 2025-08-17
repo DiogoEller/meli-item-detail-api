@@ -1,6 +1,7 @@
 package com.diogoeller.meli_item_detail_api.controller;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -44,7 +45,7 @@ public class ProductController {
             @Parameter(description = "ID do produto", example = "MLB123") @PathVariable String id) {
         log.info("Buscando produto por id: {}", id);
         ProductDto product = productService.getProductById(id);
-        if (product == null) {
+        if (Objects.isNull(product)) {
             log.warn("Produto não encontrado: {}", id);
             throw new ResourceNotFoundException("Produto não encontrado: " + id);
         }
@@ -56,7 +57,7 @@ public class ProductController {
     public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
         log.info("Criando produto: {}", productDto.getTitle());
         ProductDto createdProduct = productService.createProduct(productDto);
-        if (createdProduct == null) {
+        if (Objects.isNull(createdProduct)) {
             log.error("Erro ao criar produto: {}", productDto.getTitle());
             throw new ResourceNotFoundException("Erro ao criar produto.");
         }
@@ -70,7 +71,7 @@ public class ProductController {
             @RequestBody ProductDto productDto) {
         log.info("Atualizando produto id: {}", id);
         ProductDto updatedProduct = productService.updateProduct(id, productDto);
-        if (updatedProduct == null) {
+        if (Objects.isNull(updatedProduct)) {
             log.warn("Produto não encontrado para atualização: {}", id);
             throw new ResourceNotFoundException("Produto não encontrado para atualização: " + id);
         }
@@ -83,7 +84,7 @@ public class ProductController {
             @Parameter(description = "ID do produto", example = "MLB123") @PathVariable String id) {
         log.info("Excluindo produto id: {}", id);
         ProductDto product = productService.getProductById(id);
-        if (product == null) {
+        if (Objects.isNull(product)) {
             log.warn("Produto não encontrado para exclusão: {}", id);
             throw new ResourceNotFoundException("Produto não encontrado para exclusão: " + id);
         }
@@ -97,6 +98,10 @@ public class ProductController {
             @Parameter(description = "Categoria do produto", example = "Eletrônicos") @RequestParam String category) {
         log.info("Buscando produtos relacionados pela categoria: {}", category);
         List<ProductDto> related = productService.getRelatedItems(category);
+        if (Objects.isNull(related) || related.isEmpty()) {
+            log.warn("Nenhum produto encontrado para a categoria: {}", category);
+            throw new ResourceNotFoundException("Nenhum produto encontrado para a categoria: " + category);
+        }
         return ResponseEntity.ok(related);
     }
 }

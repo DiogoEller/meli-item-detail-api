@@ -1,6 +1,7 @@
 package com.diogoeller.meli_item_detail_api.mapper;
 
 import java.util.List;
+import java.util.Objects;
 
 import com.diogoeller.meli_item_detail_api.dto.ProductDto;
 import com.diogoeller.meli_item_detail_api.model.Product;
@@ -10,7 +11,7 @@ public class ProductMapper {
     private ProductMapper() {}
 
     public static ProductDto toDto(Product product) {
-        if (product == null) return null;
+        if (Objects.isNull(product)) return null;
         ProductDto dto = new ProductDto();
         dto.setId(product.getId());
         dto.setTitle(product.getTitle());
@@ -24,7 +25,7 @@ public class ProductMapper {
     }
 
     public static Product toEntity(ProductDto dto) {
-        if (dto == null) return null;
+        if (Objects.isNull(dto)) return null;
         Product product = new Product();
         product.setId(dto.getId());
         product.setTitle(dto.getTitle());
