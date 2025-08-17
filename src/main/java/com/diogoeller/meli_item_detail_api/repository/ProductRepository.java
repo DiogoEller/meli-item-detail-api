@@ -6,6 +6,8 @@ import com.diogoeller.meli_item_detail_api.model.Product;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
@@ -13,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Repository
 @Slf4j
@@ -22,6 +25,13 @@ public class ProductRepository implements ProductRepositoryInterface {
     private String filePath;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
+
+    @Autowired
+    public ProductRepository() {}
+    
+    public ProductRepository(String filePath) {
+        this.filePath = filePath;
+    }
 
     private File getFile() {
         File file = new File(filePath);
@@ -57,7 +67,7 @@ public class ProductRepository implements ProductRepositoryInterface {
                 .filter(p -> p.getId().equals(id))
                 .findFirst()
                 .orElse(null);
-        if (product == null) {
+        if (Objects.isNull(product)) {
             log.warn("Produto com id '{}' não encontrado.", id);
         } else {
             log.debug("Produto encontrado: {}", product.getTitle());

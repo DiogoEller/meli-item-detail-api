@@ -1,6 +1,7 @@
 package com.diogoeller.meli_item_detail_api.service;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ public class ProductService implements ProductServiceInterface {
     public ProductDto getProductById(String id) {
         log.info("Buscando produto pelo id: {}", id);
         Product product = productRepository.findById(id);
-        if (product == null) {
+        if (Objects.isNull(product)) {
             log.warn("Produto com id '{}' não encontrado no repositório.", id);
         } else {
             log.debug("Produto encontrado: {}", product.getTitle());
@@ -54,7 +55,7 @@ public class ProductService implements ProductServiceInterface {
         log.info("Atualizando produto com id: {}", id);
         Product product = ProductMapper.toEntity(productDto);
         Product updatedProduct = productRepository.update(id, product);
-        if (updatedProduct == null) {
+        if (Objects.isNull(updatedProduct)) {
             log.warn("Produto com id '{}' não encontrado para atualização.", id);
         } else {
             log.debug("Produto atualizado: {}", updatedProduct.getTitle());
