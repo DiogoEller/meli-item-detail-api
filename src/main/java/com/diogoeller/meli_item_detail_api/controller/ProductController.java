@@ -45,6 +45,7 @@ public class ProductController {
             @Parameter(description = "ID do produto", example = "MLB123") @PathVariable String id) {
         log.info("Buscando produto por id: {}", id);
         ProductDto product = productService.getProductById(id);
+        // Validação: retorna 404 se o produto não existir.
         if (Objects.isNull(product)) {
             log.warn("Produto não encontrado: {}", id);
             throw new ResourceNotFoundException("Produto não encontrado: " + id);
@@ -57,6 +58,7 @@ public class ProductController {
     public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
         log.info("Criando produto: {}", productDto.getTitle());
         ProductDto createdProduct = productService.createProduct(productDto);
+        // Validação: retorna erro se não conseguir criar o produto.
         if (Objects.isNull(createdProduct)) {
             log.error("Erro ao criar produto: {}", productDto.getTitle());
             throw new ResourceNotFoundException("Erro ao criar produto.");
@@ -71,6 +73,7 @@ public class ProductController {
             @RequestBody ProductDto productDto) {
         log.info("Atualizando produto id: {}", id);
         ProductDto updatedProduct = productService.updateProduct(id, productDto);
+        // Validação: retorna erro se o produto não existir para atualização.
         if (Objects.isNull(updatedProduct)) {
             log.warn("Produto não encontrado para atualização: {}", id);
             throw new ResourceNotFoundException("Produto não encontrado para atualização: " + id);
@@ -84,6 +87,7 @@ public class ProductController {
             @Parameter(description = "ID do produto", example = "MLB123") @PathVariable String id) {
         log.info("Excluindo produto id: {}", id);
         ProductDto product = productService.getProductById(id);
+        // Validação: retorna erro se o produto não existir para exclusão.
         if (Objects.isNull(product)) {
             log.warn("Produto não encontrado para exclusão: {}", id);
             throw new ResourceNotFoundException("Produto não encontrado para exclusão: " + id);
@@ -98,6 +102,7 @@ public class ProductController {
             @Parameter(description = "Categoria do produto", example = "Eletrônicos") @RequestParam String category) {
         log.info("Buscando produtos relacionados pela categoria: {}", category);
         List<ProductDto> related = productService.getRelatedItems(category);
+        // Integração: retorna 404 se não houver produtos relacionados na categoria.
         if (Objects.isNull(related) || related.isEmpty()) {
             log.warn("Nenhum produto encontrado para a categoria: {}", category);
             throw new ResourceNotFoundException("Nenhum produto encontrado para a categoria: " + category);
