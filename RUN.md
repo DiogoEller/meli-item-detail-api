@@ -56,7 +56,7 @@ cd meli-item-detail-api
 
 ---
 
-### Usando Docker (passo a passo sucinto)
+### Usando Docker
 
 1. **Build do jar:**
    ```sh

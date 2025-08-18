@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+// Repositório responsável pela persistência dos produtos em arquivo JSON.
+// Simula operações de banco de dados, mas usando leitura/escrita em arquivo.
 @Repository
 @Slf4j
 public class ProductRepository implements ProductRepositoryInterface {
@@ -133,6 +135,7 @@ public class ProductRepository implements ProductRepositoryInterface {
 
     @Override
     public List<Product> findByCategory(String category) {
+        // Filtra produtos pela categoria informada, evitando carregar todos os produtos na memória.
         return findAll().stream()
             .filter(p -> p.getCategory().equalsIgnoreCase(category))
             .toList();

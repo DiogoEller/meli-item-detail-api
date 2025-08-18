@@ -1,5 +1,7 @@
 # Meli Item Detail API
 
+[🔗 Projeto no GitHub](https://github.com/DiogoEller/meli-item-detail-api/tree/main)
+
 ## Visão Geral
 
 API RESTful para gerenciamento de produtos, incluindo busca por produtos relacionados via categoria. Persistência em arquivo JSON. Documentação automática via Swagger.
